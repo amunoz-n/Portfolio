@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Generar Placeholders Duku</title>
+</head>
+<body>
+    <h1>Placeholders para Duku</h1>
+    <p>Guarda las siguientes imágenes como scene1.jpg, scene2.jpg, etc.</p>
+    
+    <canvas id="canvas1" width="800" height="450"></canvas><br>
+    <canvas id="canvas2" width="800" height="450"></canvas><br>
+    <canvas id="canvas3" width="800" height="450"></canvas><br>
+    <canvas id="canvas4" width="800" height="450"></canvas><br>
+    <canvas id="canvas5" width="800" height="450"></canvas><br>
+    <canvas id="canvas6" width="800" height="450"></canvas><br>
+
+    <script>
+        const scenes = [
+            { text: 'Escena 1\nDuku te da la bienvenida', color: '#4cc9f0' },
+            { text: 'Escena 2\nUna aventura comienza', color: '#4361ee' },
+            { text: 'Escena 3\nDescubres un secreto', color: '#7209b7' },
+            { text: 'Escena 4\nEl misterio se revela', color: '#f72585' },
+            { text: 'Escena 5\nCasi has llegado', color: '#ff6b35' },
+            { text: 'Escena 6\n¡Recompensa obtenida!', color: '#2ec4b6' }
+        ];
+
+        scenes.forEach((scene, index) => {
+            const canvas = document.getElementById(`canvas${index + 1}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo gradiente
+            const gradient = ctx.createLinearGradient(0, 0, 800, 450);
+            gradient.addColorStop(0, scene.color);
+            gradient.addColorStop(1, '#16193e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 450);
+            
+            // Texto
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            const lines = scene.text.split('\n');
+            lines.forEach((line, i) => {
+                ctx.fillText(line, 400, 225 + (i - 0.5) * 60);
+            });
+            
+            // Número de escena
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText(`Imagen ${index + 1}/6`, 400, 400);
+        });
+    </script>
+</body>
+</html>
