@@ -981,9 +981,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const toggleSoundBtnRadio = document.getElementById('toggle-sound-btn-radio');
     const toggleMusicBtnRadio = document.getElementById('toggle-music-btn-radio');
     const playPauseBtn = document.getElementById('play-pause-btn');
-    const playPauseHeaderBtn = document.getElementById('play-pause-header-btn');
-    const prevSongBtn = document.getElementById('prev-song-btn');
-    const nextSongBtn = document.getElementById('next-song-btn');
     const randomBtn = document.getElementById('random-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const volumeValue = document.getElementById('volume-value');
@@ -1002,18 +999,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', togglePlayPause);
-    }
-    
-    if (playPauseHeaderBtn) {
-        playPauseHeaderBtn.addEventListener('click', togglePlayPause);
-    }
-    
-    if (prevSongBtn) {
-        prevSongBtn.addEventListener('click', playPreviousSong);
-    }
-    
-    if (nextSongBtn) {
-        nextSongBtn.addEventListener('click', playNextSong);
     }
     
     if (randomBtn) {
@@ -1178,22 +1163,32 @@ async function loadPlaylist() {
     if (!playlistContainer) return;
     
     try {
-        // Hacer fetch al directorio para obtener la lista de archivos
-        const response = await fetch('./audio/soundtrack/');
-        const html = await response.text();
-        
-        // Parsear el HTML para extraer los archivos de audio
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const links = doc.querySelectorAll('a');
-        
-        const availableSongs = [];
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && (href.endsWith('.mp3') || href.endsWith('.m4a'))) {
-                availableSongs.push(href);
-            }
-        });
+        // Lista manual de canciones (ya que el servidor no permite listar directorios)
+        const availableSongs = [
+            '2am - Slightly Stoopid.mp3',
+            '311 - Amber.mp3',
+            'Alborosie ft. Raging Fyah – The Unforgiven.mp3',
+            'Alice In Chains - Would.mp3',
+            'Alton Ellis - I\'m Still In Love With You.mp3',
+            'Alton Ellis - You\'ve Made Me So Very Happy.mp3',
+            'Dollar - No saben como vivo.mp3',
+            'Fernando Costa ft Dollar - Chacho.m4a',
+            'Fernando Costa ft Dollar - Pa Que Lo Gocen.m4a',
+            'Linkin Park - Don\'t Stay.mp3',
+            'Linkin Park - Somewhere I Belong.mp3',
+            'Swan Fyahbwoy - Fenomenal.mp3',
+            'Swan Fyahbwoy - Innadiflames.mp3',
+            'Swan Fyahbwoy - Malianteria.mp3',
+            'Swan Fyahbwoy - Por Fumar.mp3',
+            'Swan Fyahbwoy - Reggae Liphe.mp3',
+            'System of a Down - Question.mp3',
+            'System of a Down- Atwa.mp3',
+            'Tupac - Blasphemy.mp3',
+            'Tupac - I Get Around.mp3',
+            'Tupac - If My Homie Calls.mp3',
+            'Tupac - It Aint Easy.mp3',
+            'Utada Hikaru - Simple and Clean (Planitb Remix).m4a'
+        ];
         
         radioState.playlist = availableSongs;
         
@@ -1296,14 +1291,10 @@ function playSong(songFile, songElement) {
             radioState.currentSong = fileName;
             showUnlockNotification(`🎵 Reproduciendo: ${displayName}`);
             
-            // Actualizar botones de play/pause
+            // Actualizar botón de play/pause
             const playPauseBtn = document.getElementById('play-pause-btn');
-            const playPauseHeaderBtn = document.getElementById('play-pause-header-btn');
             if (playPauseBtn) {
                 playPauseBtn.textContent = '⏸️ Pausar';
-            }
-            if (playPauseHeaderBtn) {
-                playPauseHeaderBtn.textContent = '⏸';
             }
         }).catch(error => {
             console.error('Error al reproducir canción:', error);
@@ -1318,7 +1309,6 @@ function playSong(songFile, songElement) {
 // Control de Play/Pause
 function togglePlayPause() {
     const playPauseBtn = document.getElementById('play-pause-btn');
-    const playPauseHeaderBtn = document.getElementById('play-pause-header-btn');
     
     // Si no hay música cargada, reproducir canción aleatoria
     if (!radioState.backgroundMusic) {
@@ -1337,12 +1327,10 @@ function togglePlayPause() {
     if (radioState.backgroundMusic.paused) {
         radioState.backgroundMusic.play();
         if (playPauseBtn) playPauseBtn.textContent = '⏸️ Pausar';
-        if (playPauseHeaderBtn) playPauseHeaderBtn.textContent = '⏸';
         radioState.musicEnabled = true;
     } else {
         radioState.backgroundMusic.pause();
         if (playPauseBtn) playPauseBtn.textContent = '▶️ Reproducir';
-        if (playPauseHeaderBtn) playPauseHeaderBtn.textContent = '⏯';
         radioState.musicEnabled = false;
     }
 }

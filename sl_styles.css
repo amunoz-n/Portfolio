@@ -53,6 +53,34 @@ body::before {
     position: relative;
 }
 
+/* Toggle del minireproductor en radio menu */
+.mini-player-toggle-container {
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.mini-player-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4caf50;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mini-player-toggle-label:hover {
+    color: #66bb6a;
+}
+
+.mini-player-toggle-label input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
 .game-info {
     display: none;
     justify-content: center;
@@ -280,37 +308,6 @@ body::before {
         2px 2px 4px rgba(0, 0, 0, 0.8);
     font-family: 'Cinzel Decorative', serif;
     letter-spacing: 2px;
-}
-
-.radio-header-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.radio-header-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 0;
-    cursor: pointer;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    padding: 0;
-}
-
-.radio-header-btn:hover {
-    color: rgba(255, 255, 255, 0.7);
-    transform: scale(1.15);
-}
-
-.radio-header-btn:active {
-    transform: scale(0.9);
 }
 
 .inventory-close-btn {
@@ -1304,9 +1301,8 @@ body::before {
         0 0 70px #8bc34a;
     text-align: center;
     white-space: pre-wrap;
-    word-break: normal;
-    overflow-wrap: normal;
-    word-wrap: normal;
+    word-break: keep-all;
+    overflow-wrap: break-word;
     hyphens: none;
     display: none;
     min-height: 80px;

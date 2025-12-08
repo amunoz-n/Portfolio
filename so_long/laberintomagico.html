@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laberinto Mágico - Múltiples Mundos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Romanesco&family=Blaka+Hollow&family=Cinzel+Decorative:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sl_styles.css">
+</head>
+<body>
+    <!-- Diálogo de NPC con logo -->
+    <div class="dialogue" id="npc-dialogue">
+        <div class="dialogue-content" id="dialogue-text"></div>
+        <div class="dialogue-logo" id="dialogue-logo">
+            <img src="./assets/olivalley_logo.png" alt="Logo Olive Valley" onerror="this.style.display='none'">
+        </div>
+    </div>
+    
+    <!-- Contenedor de aventura gráfica para Duku -->
+    <div class="graphic-adventure-container" id="graphic-adventure">
+        <div class="adventure-ashaya-gif">
+            <img src="./assets/duku/ashaya.gif" alt="Ashaya" onerror="this.style.display='none'">
+            <div class="ashaya-label">Ashaya</div>
+        </div>
+        <div class="adventure-image-container">
+            <img id="adventure-image" src="" alt="Aventura Gráfica">
+        </div>
+        <div class="adventure-text-overlay" id="adventure-text-overlay"></div>
+        <div class="adventure-name-input" id="adventure-name-input">
+            <label for="player-name-input">¿Cómo te llamas, aventurero?</label>
+            <input type="text" id="player-name-input" placeholder="Escribe tu nombre aquí..." maxlength="20">
+        </div>
+        <div class="adventure-quiz-buttons" id="adventure-quiz-buttons">
+            <button class="quiz-btn" data-answer="olivo">un Olivo</button>
+            <button class="quiz-btn" data-answer="demanda">una Demanda</button>
+            <button class="quiz-btn" data-answer="elemental">un Elemental</button>
+            <button class="quiz-btn" data-answer="siguiente">un Siguiente</button>
+        </div>
+        <button class="adventure-next-btn" id="adventure-next-btn">Siguiente →</button>
+    </div>
+    
+    <!-- Controles de audio eliminados -->
+    
+    <div class="unlock-notification" id="unlock-notification">
+        ¡Nueva salida desbloqueada!
+    </div>
+    
+    <div class="game-container">
+        <div class="game-info">
+            <div class="info-item">
+                <div class="info-label">Objetivos</div>
+                <div class="info-value" id="collectibles-count">0/5</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Mapa</div>
+                <div class="info-value" id="current-map">Plaza Central</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Salidas</div>
+                <div class="info-value" id="exits-count">0/3</div>
+            </div>
+        </div>
+        
+        <div class="game-board-container">
+            <div class="game-board" id="game-board">
+                <!-- El tablero se genera con JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-message" id="game-message">
+        <h2 id="message-title">¡Felicidades!</h2>
+        <p id="message-text">Has completado el nivel.</p>
+        <button class="restart-btn" id="restart-btn">Jugar de nuevo</button>
+    </div>
+
+    <!-- Scripts del juego -->
+    <script src="sl_sprites.js"></script>
+    <script src="sl_npc_sprites.js"></script>
+    <script src="sl_mapas.js"></script>
+    <script src="sl_audio.js"></script>
+    <script src="sl_game.js"></script>
+    <script src="sl_ui.js"></script>
+    <script>
+        // ================================
+        // ESTADO DEL JUEGO
+        // ================================
+
+        const gameState = {
+            currentMap: 'mapa0',
+            mapsState: {},
+            dialogueActive: false,
+            audioEnabled: true,
+            inventory: [], // Para guardar objetos especiales
+            unlockedExits: [] // Para guardar qué salidas están desbloqueadas
+        };
+
+        // ================================
+        // INICIALIZACIÓN
+        // ================================
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initGame();
+            setupInput();
+        });
+    </script>
+</body>
+</html>
